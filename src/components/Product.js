@@ -93,14 +93,6 @@ const Product = ( { product, removeProduct } ) => {
                         </AccordionDetails>
                     </Accordion>
                     <Button 
-                        variant="contained" 
-                        color="primary" 
-                        onClick={() => {removeProduct(product.id)}}
-                        className={classes.removeButton}
-                    >
-                        Remove Product
-                    </Button>
-                    <Button 
                         variant="contained"
                         color="primary"
                         className={classes.editButton}
@@ -108,6 +100,14 @@ const Product = ( { product, removeProduct } ) => {
                         to={`/edit-product/${product.id}`}
                     >
                         Edit Product
+                    </Button>
+                    <Button 
+                        variant="contained" 
+                        color="secondary" 
+                        onClick={() => {removeProduct(product.id)}}
+                        className={classes.removeButton}
+                    >
+                        Remove Product
                     </Button>
                 </CardContent>
             </Card>
