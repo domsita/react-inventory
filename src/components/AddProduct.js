@@ -27,6 +27,7 @@ const AddProduct = ({ product, addProduct, editProduct }) => {
     const [description, setDescription] = useState(product[0] ? product[0].description : "");
     const [onSale, setOnSale] = useState(product[0] ? product[0].onSale : false);
     const [quantity, setQuantity] = useState(product[0] ? product[0].quantity : 0);
+    const [category, setCategory] = useState(product[0] ? product[0].category : "");
 
     const classes = useStyles();
 
@@ -34,9 +35,9 @@ const AddProduct = ({ product, addProduct, editProduct }) => {
 
     const handleClick = () => {
         if (product[0]) {
-            editProduct(product[0].id, name, img, price, description, onSale, quantity);
+            editProduct(product[0].id, name, img, price, description, onSale, quantity, category);
         } else {
-            addProduct(name, img, price, description, onSale, quantity);
+            addProduct(name, img, price, description, onSale, quantity, category);
         }
         setName('');
         setPrice(0);
@@ -44,6 +45,7 @@ const AddProduct = ({ product, addProduct, editProduct }) => {
         setQuantity(0);
         setOnSale(false);
         setImg('');
+        setCategory('');
         history.push("/products");   
     }
 
@@ -98,6 +100,14 @@ const AddProduct = ({ product, addProduct, editProduct }) => {
                         id='quantity'
                         value={quantity}
                         onChange={(e)=>{setQuantity(e.target.value)}}
+                    />
+                </FormControl>
+                <FormControl className={classes.input}>
+                    <InputLabel htmlFor='category'>Category: </InputLabel>
+                    <Input
+                        id='category'
+                        value={category}
+                        onChange={(e)=>{setCategory(e.target.value)}}
                     />
                 </FormControl>
             </Grid>

@@ -64,6 +64,9 @@ const Product = ( { product, removeProduct } ) => {
                     >
                         {product.name} {product.onSale ? '- On Sale' : ''}
                     </Typography>
+                    <Typography variant='body2'>
+                        {product.category}
+                    </Typography>
                     <Typography 
                         variant='h6' 
                         color='textSecondary'

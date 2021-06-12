@@ -7,8 +7,12 @@ import { useState } from 'react';
 import { uid } from 'react-uid';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 
+/* 
+  TODO: Add Search, Add Database
+*/
+
 function App() {
-  const addProduct = (name, img, price, description, onSale, quantity) => {
+  const addProduct = (name, img, price, description, onSale, quantity, category) => {
     const newItem = {
       id: uid(name),
       name,
@@ -16,12 +20,13 @@ function App() {
       price,
       description,
       onSale,
-      quantity
+      quantity,
+      category
     }
     setProducts([...products, newItem]);
   }
 
-  const editProduct = (id, name, img, price, description, onSale, quantity) => {
+  const editProduct = (id, name, img, price, description, onSale, quantity, category) => {
     for (let i = 0; i < products.length; i++) {
       if (products[i].id === id) {
         products[i].name = name;
@@ -30,6 +35,7 @@ function App() {
         products[i].description = description;
         products[i].onSale = onSale;
         products[i].quantity = quantity;
+        products[i].category = category;
       }
     }
 
@@ -44,11 +50,26 @@ function App() {
   }
 
   const [products, setProducts] = useState(dummyData);
+  const inputData = dummyData;
 
   const getProductById = (id) => {
     return products.filter((product) => {
       return (product.id == id)
     });
+  }
+
+  const filterByCategory = (category) => {
+    if (category === "all") {
+        setProducts(inputData);
+        return;
+    }
+    let filteredProducts = [];
+    inputData.forEach((product) => {
+        if (product.category === category) {
+          filteredProducts.push(product)
+        };
+    });
+    setProducts(filteredProducts);
   }
 
   function Child() {
@@ -72,7 +93,7 @@ function App() {
         <Header />
         <Switch>    
           <Route exact path='/products'>
-            <Products products={products} removeProduct={removeProduct}/>
+            <Products inputData={inputData} products={products} removeProduct={removeProduct} filterByCategory={filterByCategory} />
           </Route>
           <Route exact path='/add-product'>
             <AddProduct product={[]} addProduct={addProduct} editProduct={editProduct} />

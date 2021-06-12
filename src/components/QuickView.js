@@ -28,6 +28,7 @@ const QuickView = ({ product, removeProduct }) => {
                     <Typography variant="body1">QTY: {product.quantity}</Typography>
                     <Typography variant="body1">${product.price}</Typography>
                     <Typography variant='body2'>On Sale: {product.onSale ? "yes" : "no"}</Typography>
+                    <Typography variant="body2">Category: {product.category}</Typography>
                     <Grid container>
                         <Button
                             variant="contained"
