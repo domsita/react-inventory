@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    link: {
+        color: "white",
+
+    }
 }));
 
 export default function SearchAppBar() {
@@ -67,6 +73,12 @@ export default function SearchAppBar() {
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
                         Material-UI
+                    </Typography>
+                    <Typography variant="h6" noWrap>
+                        <Button className={classes.link} component={Link} to="/products">Products</Button>
+                    </Typography>
+                    <Typography variant="h6" noWrap>
+                        <Button className={classes.link} component={Link} to="/add-product">Add Product</Button>
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>

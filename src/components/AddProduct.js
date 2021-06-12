@@ -8,22 +8,44 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        marginTop: 75,
         padding: 20,
+    },
+    input: {
+        margin: 20,
     }
 }));
 
-const AddProduct = ({ addProduct }) => {
-    const [name, setName] = useState('');
-    const [img, setImg] = useState('');
-    const [price, setPrice] = useState(0);
-    const [description, setDescription] = useState('');
-    const [onSale, setOnSale] = useState(false);
-    const [quantity, setQuantity] = useState(0);
+const AddProduct = ({ product, addProduct, editProduct }) => {
+    const [name, setName] = useState(product[0] ? product[0].name : "");
+    const [img, setImg] = useState(product[0] ? product[0].img : "");
+    const [price, setPrice] = useState(product[0] ? product[0].price : 0);
+    const [description, setDescription] = useState(product[0] ? product[0].description : "");
+    const [onSale, setOnSale] = useState(product[0] ? product[0].onSale : false);
+    const [quantity, setQuantity] = useState(product[0] ? product[0].quantity : 0);
 
     const classes = useStyles();
+
+    let history = useHistory();
+
+    const handleClick = () => {
+        if (product[0]) {
+            editProduct(product[0].id, name, img, price, description, onSale, quantity);
+        } else {
+            addProduct(name, img, price, description, onSale, quantity);
+        }
+        setName('');
+        setPrice(0);
+        setDescription('');
+        setQuantity(0);
+        setOnSale(false);
+        setImg('');
+        history.push("/products");   
+    }
 
     return (
         <form className={classes.root}>
@@ -33,7 +55,7 @@ const AddProduct = ({ addProduct }) => {
                 justify="center"
                 className={classes.root}
             >
-                <FormControl>
+                <FormControl className={classes.input}>
                     <InputLabel htmlFor='name'>Product Name: </InputLabel>
                     <Input 
                         id='name' 
@@ -41,7 +63,7 @@ const AddProduct = ({ addProduct }) => {
                         onChange={(e)=>{setName(e.target.value)}} 
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl className={classes.input}>
                     <InputLabel htmlFor="img">Image Link: </InputLabel>
                     <Input 
                         id='img'
@@ -49,7 +71,7 @@ const AddProduct = ({ addProduct }) => {
                         onChange={(e) => {setImg(e.target.value)}}
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl className={classes.input}>
                     <InputLabel htmlFor='price'>Price: </InputLabel>
                     <Input 
                         id='price'
@@ -57,7 +79,7 @@ const AddProduct = ({ addProduct }) => {
                         onChange={(e)=>{setPrice(e.target.value)}}
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl className={classes.input}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -70,7 +92,7 @@ const AddProduct = ({ addProduct }) => {
                         label='On Sale'
                     />
                 </FormControl>
-                <FormControl>
+                <FormControl className={classes.input}>
                     <InputLabel htmlFor='quantity'>Quantity: </InputLabel>
                     <Input
                         id='quantity'
@@ -93,6 +115,7 @@ const AddProduct = ({ addProduct }) => {
                     margin="normal"
                     InputLabelProps={{ shrink: true, }}
                     multiline={true}
+                    className={classes.input}
                     rows="5"
                     value={description}
                     onChange={(e)=>{setDescription(e.target.value)}}
@@ -105,19 +128,11 @@ const AddProduct = ({ addProduct }) => {
                 className={classes.root}
             >
                 <Button 
-                    onClick={() => {
-                        addProduct(name, img, price, description, onSale, quantity);
-                        setName('');
-                        setPrice(0);
-                        setDescription('');
-                        setQuantity(0);
-                        setOnSale(false);
-                        setImg('');
-                    }}
+                    onClick={handleClick}
                     variant="outlined"
                     color="secondary"
                 >
-                    Add Product
+                    {product[0] ? "Edit Product" : "Add Product"}
                 </Button>
             </Grid>
         </form>

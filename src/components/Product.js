@@ -9,6 +9,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import { makeStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,11 +39,16 @@ const useStyles = makeStyles((theme) => ({
     removeButton: {
         marginTop: 10, 
         width: '100%',
+    },
+    editButton: {
+        marginTop: 10,
+        width: '100%',
     }
 }));
 
 const Product = ( { product, removeProduct } ) => {
     const classes = useStyles();
+
     return (
         <>
             <Card className={classes.card}>
@@ -93,6 +99,15 @@ const Product = ( { product, removeProduct } ) => {
                         className={classes.removeButton}
                     >
                         Remove Product
+                    </Button>
+                    <Button 
+                        variant="contained"
+                        color="primary"
+                        className={classes.editButton}
+                        component={Link}
+                        to={`/edit-product/${product.id}`}
+                    >
+                        Edit Product
                     </Button>
                 </CardContent>
             </Card>
